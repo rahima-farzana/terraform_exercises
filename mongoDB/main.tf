@@ -70,7 +70,9 @@ output "full_connection_uri" {
 }
 
 resource "mongodbatlas_project_ip_access_list" "local_access" {
+  for_each   = toset(var.allowed_ips)
   project_id = var.project_id
-  ip_address = var.k8s_public_ip
-  comment    = "Allow access from my local machine for kind cluster"
+  ip_address = each.value
+  comment    = "Allow access from my local machine or kind cluster"
 }
+
