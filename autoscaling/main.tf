@@ -12,19 +12,20 @@ module "autoscaling" {
   source = "./autoscaling"
   name = "asg-blue"
   create_launch_template = true
-  vpc_zone_identifier       = ["subnet-034ae6bc268a8a248", "subnet-0d4876621a535c5f1", "subnet-06ae91a8b23fe0ce6"]
-  load_balancers            = ["wezvatech"]
+  vpc_zone_identifier       = ["subnet-08e8146d5754843f7", "subnet-0085f77c1a13eb36c", "subnet-0ad5ec3834e796e0d"]
+  # Base64 encode the shell script text payload 
+  user_data = base64encode(file("./autoscaling/neo4j-bootstrap.sh"))
+
+#  load_balancers            = ["wezvatech"]
   min_size                  = 1
-  max_size                  = 2
+  max_size                  = 3
   desired_capacity          = 1
-  health_check_type         = "EC2"
-  health_check_grace_period = 30
 
   launch_template_name        = "lt-blue"
-  image_id          = "ami-0836ed1f613068bd6"
-  key_name          = "wezva2025"
-  instance_type     = "t3.micro"
-  security_groups   = ["sg-0a781bd43a7ce089e"]
+  image_id          = "ami-01a00762f46d584a1"
+  key_name          = "wezva2026"
+  instance_type     = "t3.medium"
+  security_groups   = ["sg-0a7e1529fed5652fe"]
 }
 
 #---------------------------------------------#
