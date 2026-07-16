@@ -1,6 +1,6 @@
 /*
 Wezva Technologies - Cloud Infrastructure Automation Framework
-Component: Centralised Ingestion Sanitisation & Real-Time PII Gateway
+Component: AIOps Data Governance & Real-Time PII Gateway
 Author: Adam, Head of Platform
 Optimized: Decoupled multi-pipeline protection, serverless NLP streaming, and zero-trust data ingestion.
 */
