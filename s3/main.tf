@@ -1,54 +1,29 @@
+/*
+Wezva Technologies - Cloud Infrastructure Automation Framework
+Component: S3 Storage Module
+Author: Adam, Head of Platform
+Optimized: For_each object looping, strict multi-tier backup archiving timelines.
+*/
+
 provider "aws" {
-  region = "ap-south-1" # Replace with your desired region
+  region = "ap-south-1"
 }
 
-# Create S3 bucket
-resource "aws_s3_bucket" "example_bucket" {
-  bucket = "wezvatech-jenkins-backup-9739110917"
+# Invoke your modular compliance bucket creation tier cleanly
+module "infrastructure_compliance_storage" {
+  source      = "./s3_compliance_bucket"
+  environment = "production"
+
+  # 🎯 DYNAMIC INPUT: Simply add or append bucket name strings to this variable array block
+  bucket_names = [
+    "wezvatech-2026-tfstate",
+    "wezvatech-dvc-data-lake"
+  ]
 }
 
-# Enable versioning
-resource "aws_s3_bucket_versioning" "example_versioning" {
-  bucket = aws_s3_bucket.example_bucket.id
-
-  versioning_configuration {
-    status = "Enabled"
-  }
+# Output tracking loop maps straight to your terminal screen for verification
+output "deployed_infrastructure_storage_arns" {
+  value = module.infrastructure_compliance_storage.bucket_arns
 }
 
-# Create lifecycle configuration
-resource "aws_s3_bucket_lifecycle_configuration" "example_lifecycle" {
-  bucket = aws_s3_bucket.example_bucket.id
 
-  rule {
-    id     = "lifecycle-policy"
-    status = "Enabled"
-
-    # Transition objects to STANDARD_IA after 30 days
-    transition {
-      days          = 30
-      storage_class = "STANDARD_IA"
-    }
-
-    # Transition objects to GLACIER after 365 days
-    transition {
-      days          = 365
-      storage_class = "GLACIER"
-    }
-
-    # Expire objects after 2 years
-    expiration {
-      days = 730
-    }
-
-    # Manage noncurrent versions of objects
-    noncurrent_version_transition {
-      noncurrent_days = 90
-      storage_class   = "GLACIER"
-    }
-
-    noncurrent_version_expiration {
-      noncurrent_days = 180
-    }
-  }
-}
