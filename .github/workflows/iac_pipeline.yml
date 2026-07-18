@@ -1,4 +1,4 @@
-name: demo Pipeline
+name: IAC Pipeline
 
 on:
   workflow_dispatch:
@@ -8,7 +8,7 @@ on:
       - 'demo/**'
       - '.github/workflows/demo.yml'
     branches:
-      - main
+      - dev
 
 jobs:
   terraform-efs: 

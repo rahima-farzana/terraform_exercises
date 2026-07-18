@@ -1,8 +1,8 @@
 # ------------------------------------------------------------------- #
-# Use this project to provision EC2 servers
+# Use this project to provision Test EC2 servers
 # Map variable defines the details of each server you are provisioning
 #    Name/Tag of the server = Type of the server
-# AUTHOR: ADAM M | +91-9739110917 (WhatsApp/Call)
+# AUTHOR: ADAM M | +91-9739110917 
 # ------------------------------------------------------------------- #
 
 provider "aws" {
