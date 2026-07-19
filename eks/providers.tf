@@ -1,22 +1,45 @@
 terraform {
-  required_version = ">= 0.12"
+  required_version = ">= 1.0"
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.0"
+    }
+    kubernetes = {
+      source  = "hashicorp/kubernetes"
+      version = "~> 2.0"
+    }
+    helm = {
+      source  = "hashicorp/helm"
+      version = "~> 2.0"
+    }
+  }
 }
 
 provider "aws" {
   region = var.aws_region
 }
 
+data "aws_eks_cluster_auth" "cluster" {
+  name = aws_eks_cluster.demo.name
+}
+
 provider "kubernetes" {
-  alias = "eks"
-  config_path = "~/.kube/config"
+  host                   = aws_eks_cluster.demo.endpoint
+  # ADD [0] HERE
+  cluster_ca_certificate = base64decode(aws_eks_cluster.demo.certificate_authority[0].data)
+  token                  = data.aws_eks_cluster_auth.cluster.token
 }
 
 provider "helm" {
-  kubernetes = {
-    config_path = "~/.kube/config"
+  kubernetes {
+    host                   = aws_eks_cluster.demo.endpoint
+    # ADD [0] HERE
+    cluster_ca_certificate = base64decode(aws_eks_cluster.demo.certificate_authority[0].data)
+    token                  = data.aws_eks_cluster_auth.cluster.token
   }
 }
 
-data "aws_availability_zones" "available" {}
 
 data "aws_caller_identity" "current" {}
+

@@ -1,20 +1,20 @@
 variable "aws_region" {
+  type    = string
   default = "ap-south-1"
 }
 
 variable "cluster_name" {
-  default = "WezvaTech-EKS-Demo"
   type    = string
-}
-
-variable "node_instance_type" {
-    default = "t2.medium"
+  default = "WezvaTech-EKS-Demo"
 }
 
 variable "eksversion" {
-    default = "1.33"
+  type    = string
+  default = "1.33"
 }
 
 variable "caversion" {
-    default = "v1.33.0"
+  type    = string
+  default = "v1.33.0"
 }
+
