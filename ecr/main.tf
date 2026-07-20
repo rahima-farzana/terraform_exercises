@@ -9,6 +9,7 @@ module "ecr_repositories" {
   repository_names = [
     "wezvatechledger",
     "wezvatechpayment",
+    "wezvatechbff",
     "wezvatechnotification"
   ]
   

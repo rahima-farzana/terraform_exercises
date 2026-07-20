@@ -16,7 +16,7 @@ module "infrastructure_compliance_storage" {
 
   # 🎯 DYNAMIC INPUT: Simply add or append bucket name strings to this variable array block
   bucket_names = [
-    "wezvatech-2026-tfstate",
+    #"wezvatech-2026-tfstate",
     "wezvatech-dvc-data-lake"
   ]
 }
