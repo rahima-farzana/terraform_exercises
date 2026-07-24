@@ -58,7 +58,12 @@ resource "aws_eks_cluster" "demo" {
     security_group_ids = [aws_security_group.demo-cluster.id]
     subnet_ids         = data.aws_subnets.default.ids
   }
-
+# --- ADD THIS CONFIGURATION BLOCK ---
+  access_config {
+    authentication_mode                         = "API_AND_CONFIG_MAP"
+    bootstrap_cluster_creator_admin_permissions = true
+  }
+  # ------------------------------------
   depends_on = [
     aws_iam_role_policy_attachment.demo-cluster-AmazonEKSClusterPolicy,
     aws_iam_role_policy_attachment.demo-cluster-AmazonEKSVPCResourceController,
