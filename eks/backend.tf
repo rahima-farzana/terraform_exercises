@@ -6,7 +6,7 @@ terraform {
     encrypt        = true
     
     # Enable new native locking
-    use_lockfile   = true 
+    # not used in terraform 1.15.8,hence commenting out    use_lockfile   = true 
 
   }
 }
